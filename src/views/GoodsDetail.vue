@@ -38,7 +38,21 @@
 				</ul>
 			</div>
 		</div>
-		<div>商品footer</div>
+		<!-- footer -->
+		<div class="goods-footer">
+			<div>
+				<span>
+					<img src="../assets/img/icon/cart.png" alt="">
+				</span>
+				<span class="add-cart">
+					<button>加入购物车</button>
+				</span>
+				<span class="to-buy">
+					<button>立即购买</button>
+				</span>
+			</div>
+			
+		</div>
 	</div>
 </template>
 
@@ -137,5 +151,39 @@
 	}
 	.goods-introduce img{
 		width:100%;
+	}
+	.goods-footer{
+		position: fixed;
+		bottom: 0;
+		height: 44px;
+		background-color: #fff;
+		width: 100%;
+	}
+	.goods-footer img{
+		width: 9vw;
+	}
+	.goods-footer div{
+		margin-left: 40%;
+		line-height: 44px;
+	}
+	.add-cart button{
+		background-image: linear-gradient(135deg,#f2140c,#f2270c 70%,#f24d0c);
+		border-style: none;
+		height: 35px;
+		border-radius: 17px;
+		color: #fff;
+		outline: none;
+		font-size: 13px;
+		margin-left: 4%;
+	}
+	.to-buy button{
+		background-image: linear-gradient(135deg,#ffba0d,#ffc30d 69%,#ffcf0d);
+		border-style: none;
+		height: 35px;
+		border-radius: 17px;
+		color: #fff;
+		outline: none;
+		font-size: 13px;
+		margin-left: 4%;
 	}
 </style>

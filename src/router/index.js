@@ -11,6 +11,7 @@ import WaitRec from '../components/WaitRec.vue'
 import Addr from '../components/Addr.vue'
 import AddAddr from '../views/AddAddr.vue'
 import GoodsDetail from '../views/GoodsDetail.vue'
+import SubCat from "../components/SubCat.vue"
 Vue.use(VueRouter)
 
 const routes = [
@@ -24,9 +25,20 @@ const routes = [
   {
   	  path:"/cat",
   	  component:Cat,
+	  redirect:'/cat/subCat',
 	  meta:{
 	  		  isTab:true
-	  }
+	  },
+	  // 商品分类子分类
+	  children:[
+		  {
+			  path:"subCat",
+			  component:SubCat,
+			  meta:{
+					  isTab:true
+			  }
+		  }
+	  ]
   },
   {
   	  path:"/cart",
