@@ -30,10 +30,10 @@
 		<!--商品展示 -->
 		<div class="index-goods">
 			<ul>
-				<li @click="goodsDetail(goods.id)"v-for="(goods,index) in goods_list" :key="index">
+				<li @click="goodsDetail(goods.id)" v-for="(goods,index) in goods_list" :key="index">
 					<div><img :src="goods.goods_url" alt=""></div>
 					<div class="goods-name">{{goods.goods_name}}</div>
-					<div class="goods-price">¥{{goods.goods_price}}</div>
+					<div class="goods-price">&yen{{goods.goods_price}}</div>
 				</li>
 				
 			</ul>

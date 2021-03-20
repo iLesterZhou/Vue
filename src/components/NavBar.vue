@@ -4,7 +4,7 @@
 			<router-link tag="li" to="/">
 				<img src="../assets/img/icon/icon-index.png" />
 			</router-link>
-			<router-link tag="li" to="/cat">
+			<router-link active-class="active" tag="li" to="/cat">
 				<img src="../assets/img/icon/icon-cat.png" />
 			</router-link>
 			<router-link tag="li" to="/cart">
@@ -21,7 +21,7 @@
 </script>
 
 <style scoped="scoped">
-	.router-link-exact-active{
+	.router-link-exact-active,.active{
 		background-color: #f2270c;
 	}
 	.index-nav{

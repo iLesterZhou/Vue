@@ -10,11 +10,11 @@
 					
 				</div>
 				<div class="goods-price">
-					￥{{goods_detail.goods_price}}}
+					￥{{goods_detail.goods_price}}
 				</div>
 				<div class="goods-name">
 					<h1>
-						{{goods_detail.goods_name}}}
+						{{goods_detail.goods_name}}
 					</h1>
 				</div>
 			</div>
@@ -42,9 +42,9 @@
 		<div class="goods-footer">
 			<div>
 				<span>
-					<img src="../assets/img/icon/cart.png" alt="">
+					<span @click="toCart()" v-show="cart_num" class="cart-num">{{cart_num}}</span><img src="../assets/img/icon/cart.png" alt="">
 				</span>
-				<span class="add-cart">
+				<span class="add-cart" @click="addCart(goods_detail)">
 					<button>加入购物车</button>
 				</span>
 				<span class="to-buy">
@@ -71,12 +71,15 @@
 			this.axios.get('http://192.168.249.1:3000/indexGoods/'+id).then(res=>{
 				this.goods_detail = res.data
 			})
+			//加载页面的时候显示购物车中宝贝的数量
+			this.cart_num = JSON.parse(localStorage.getItem("cartList")).length
 		},
 		data:function(){
 			return{
 				// 评论
 				comments:[],
-				goods_detail:''
+				goods_detail:'',
+				cart_num:0
 			}
 		},
 		components:{
@@ -90,6 +93,65 @@
 				let str = mobile.slice(3,7)
 				// 将中间四位数字替换为****
 				return mobile.replace(str,"****")
+			},
+			addCart:function(goods){
+				// console.log(goods)
+				//判断用户是否登录,没有登录的话不能将商品添加到购物车，然后跳转到登录页面
+				if(!localStorage.getItem('token')){
+					this.$router.push('/login')
+				}
+				let cartGoods = {
+					"goods_name":goods.goods_name,
+					"goods_url":goods.goods_url,
+					"goods_price":goods.goods_price,
+					"id":goods.id,
+					"num":1
+				}
+				// console.log(cartGoods)
+				var cart = localStorage.getItem('cartList')
+				//获取本地缓存的购物车中是否为空,如果购物车中没有商品的话，直接将商品存入购物车
+				//如果购物车中有商品，则和当前添加的商品进行比较，如果是同一种商品直接加一，如果不是则添加近购物车
+				// console.log(cart)
+				if(cart){
+					//转换成对象
+					// 在接收服务器数据时一般是字符串。我们可以使用 JSON.parse() 方法将数据转换为 JavaScript 对象。
+					cart = JSON.parse(cart)
+					//判断 是否有此商品 有num+1 没有 push
+					var ret = this.inArray(cart,cartGoods)
+					// console.log(ret)
+					//此次添加的商品之前添加过，现在直接加一
+					if(ret.status){
+						cart[ret.index].num += 1 
+					}else{
+						//之前没有没有添加过，push
+						cart.push(cartGoods)
+					}
+				}else{
+					var cart = []
+					cart.push(cartGoods)
+					//将cartGoods转换为字符串
+					
+					
+				}
+				//购物车中宝贝的数量
+				this.cart_num = cart.length
+				// 在向服务器发送数据时一般是字符串。我们可以使用 JSON.stringify() 方法将 JavaScript 对象转换为字符串。
+				cartGoods =JSON.stringify(cart)
+				//存入本地缓存
+			    localStorage.setItem("cartList",cartGoods)
+				
+			},
+			inArray:function(cart,cartGoods){
+				for(let i=0;i<cart.length;i++){
+					//判断添加的商品之前是否添加过
+					if(cart[i].id == cartGoods.id){
+						return {"status":true,"index":i}
+					}
+				}
+				return {"status":false}
+			},
+			toCart:function(){
+				this.$router.push('/cart')
 			}
 		}
 	}
@@ -185,5 +247,20 @@
 		outline: none;
 		font-size: 13px;
 		margin-left: 4%;
+	}
+	.cart-num{
+		position: absolute;
+		top: 0;
+		left: 48%;
+		display: inline-block;
+		background: #fff;
+		color: #e4393c;
+		font-size: 7px;
+		margin-left: -10px;
+		line-height: 9px;
+		border: 1px solid #e4393c;
+		border-radius: 10px;
+		padding: 1px 3px;
+		font-weight: 700;
 	}
 </style>

@@ -12,6 +12,7 @@ import Addr from '../components/Addr.vue'
 import AddAddr from '../views/AddAddr.vue'
 import GoodsDetail from '../views/GoodsDetail.vue'
 import SubCat from "../components/SubCat.vue"
+import GoodsList from "../views/GoodsList.vue"
 Vue.use(VueRouter)
 
 const routes = [
@@ -43,9 +44,7 @@ const routes = [
   {
   	  path:"/cart",
   	  component:Cart,
-	  meta:{
-	  		  isTab:true
-	  }
+	 
   },
   {
   	  path:"/user",
@@ -99,6 +98,10 @@ const routes = [
   	  path:"/user/addAddr",
   	  component:AddAddr,
   },
+  {
+  	  path:"/goodsList/:id",
+  	  component:GoodsList,
+  }
 ]
 
 const router = new VueRouter({

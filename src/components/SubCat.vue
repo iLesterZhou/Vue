@@ -2,7 +2,7 @@
 	<div class="cat-right">
 		<!-- this is subcat {{this.$route.query.id}} -->
 		<ul>
-			<li v-for="(sub,index) in subCats" :key="index">
+			<li @click="GoodsList(sub.id)" v-for="(sub,index) in subCats" :key="index">
 				<img :src="sub.cat_img" alt="">
 				<p>{{sub.cat_name}}</p>
 			</li>
@@ -41,6 +41,9 @@
 				this.axios.get('http://192.168.249.1:3000/cats/'+id).then(res=>{
 					this.subCats = res.data.sub_cat
 				})	
+			},
+			GoodsList:function(id){
+				this.$router.push('/goodsList/'+id)
 			}
 		}
 	}
@@ -56,6 +59,7 @@
 	.cat-right li{
 		float: left;
 		padding: 2vw;
+		text-align: center;
 	}
 	.cat-right p{
 		padding: 2vw;
