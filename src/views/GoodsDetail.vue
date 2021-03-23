@@ -10,7 +10,7 @@
 					
 				</div>
 				<div class="goods-price">
-					￥{{goods_detail.goods_price}}
+					&yen{{goods_detail.goods_price}}
 				</div>
 				<div class="goods-name">
 					<h1>
@@ -105,7 +105,10 @@
 					"goods_url":goods.goods_url,
 					"goods_price":goods.goods_price,
 					"id":goods.id,
-					"num":1
+					"num":1,
+					// 商品在加入购物车之后计算价格的时候是否选中的状态
+					"checked":'true'
+					
 				}
 				// console.log(cartGoods)
 				var cart = localStorage.getItem('cartList')
@@ -157,7 +160,7 @@
 	}
 </script>
 
-<style>
+<style scoped="scoped">
 	.clear{
 		clear: both;
 	}
