@@ -47,7 +47,7 @@
 				<span class="add-cart" @click="addCart(goods_detail)">
 					<button>加入购物车</button>
 				</span>
-				<span class="to-buy">
+				<span class="to-buy" @click="toBuy(goods_detail.id)">
 					<button>立即购买</button>
 				</span>
 			</div>
@@ -107,7 +107,7 @@
 					"id":goods.id,
 					"num":1,
 					// 商品在加入购物车之后计算价格的时候是否选中的状态
-					"checked":'true'
+					"checked":'false'
 					
 				}
 				// console.log(cartGoods)
@@ -155,6 +155,10 @@
 			},
 			toCart:function(){
 				this.$router.push('/cart')
+			},
+			// 点击直接购买
+			toBuy:function(id){
+				this.$router.push({'path':'/toPay','query':{'id':id}})
 			}
 		}
 	}

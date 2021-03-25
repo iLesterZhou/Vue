@@ -3,7 +3,7 @@
 		<Header>购物车</Header>
 		<div class="clear"></div>
 		<div class="cart">
-			<ul>
+			<ul v-if="goodsList">
 				<li v-for="(goods,index) in goodsList" :key="index">
 					<div class="radio" @click="checkCart(index,$event)">
 						<input type="checkbox" v-if="goods.checked=='true'" checked="">
@@ -24,6 +24,10 @@
 					</div>
 				</li>
 			</ul>
+			
+			
+			
+			
 		</div>
 		<div class="cart-footer">
 			<div class="cart-total">
@@ -31,7 +35,7 @@
 				<span>&yen{{totalPrice}}</span>
 			</div>
 			<div class="cart-pay">
-				<button>去结算</button>
+				<button @click="toPay">去结算</button>
 				
 			</div>
 		</div>
@@ -41,9 +45,22 @@
 <script>
 	import Header from "../components/Header.vue"
 	export default{
+		//判断用户有没有登录，没有登录不能查看购物车跳转到登录页面，登录之后才能查看购物车中的商品
+		beforeRouteEnter:function(to,from,next){
+			//如果用户没有登录
+			if(!localStorage.getItem('token')){
+				next('/login')
+			}else{
+				next()
+			}
+		},
 		created:function(){
 			this.goodsList = JSON.parse(localStorage.getItem('cartList'))
-			this.sumPrice(this.goodsList)
+			// 如果购物车中没有商品，不进行价格计算
+			if(this.goodsList){
+				this.sumPrice(this.goodsList)
+			}
+			
 		},
 		components:{
 			Header
@@ -60,14 +77,8 @@
 				// alert(index)
 				//删除当前数组中的宝贝，从当前索引开始，删除的个数为一个。并非本地缓存购物车中的宝贝
 				this.goodsList.splice(index,1)
-				//提醒用户是否真的删除
-				//弹窗提示
-				let layerid = this.$layer.msg('确定要删除吗？',()=>{
-					this.saveCart(this.goodsList)
-					//关闭提示
-					this.$layer.close(layerid)
-				})
-	
+				this.saveCart(this.goodsList)
+				
 			},
 			// 更新一下本地缓存购物车
 			saveCart:function(good){
@@ -100,14 +111,28 @@
 				for(let i=0;i<goods.length;i++){
 					//计算价格的时候判断宝贝是否被选中
 					if(goods[i].checked=='true'){
-						this.totalPrice += goods[i].goods_price*goods[i].num
+						
+						this.totalPrice = ((this.totalPrice*100) + (((goods[i].goods_price)*100)*goods[i].num))/100
 					}
 					
 				}
 			},
 			//检查宝贝是否被选中
 			checkCart:function(index,$event){
-				console.log($event)
+				//如果被选中
+				if($event.target.checked){
+					this.goodsList[index].checked ='true'
+				}else{
+					this.goodsList[index].checked ='false'
+				}
+				//更新一下本地缓存购物车
+				this.saveCart(this.goodsList)
+				//重新计算价格
+				this.sumPrice(this.goodsList)
+			},
+			toPay:function(){
+				//跳转到结账页面
+				this.$router.push('/toPay')
 			}
 		}
 	}

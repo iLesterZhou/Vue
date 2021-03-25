@@ -1,6 +1,6 @@
 <template>
 	<div>
-		<Header>鍟嗗搧鍒楄〃</Header>
+		<Header>商品列表</Header>
 		<div class="clear"></div>
 		<div class="goods-list">
 			<ul>
@@ -45,7 +45,7 @@
 	}
 </script>
 
-<style>
+<style scoped="scoped">
 	.clear{
 		clear: both;
 	}

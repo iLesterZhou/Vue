@@ -19,9 +19,9 @@
 		<div class="gray-line"></div>
 		<div>
 			<ul class="user-nav">
-				<router-link tag="li" to="/user/allOrder">全部订单</router-link>
-				<router-link tag="li" to="/user/waitPay">待付款</router-link>
-				<router-link tag="li" to="/user/waitRec">待收货</router-link>
+				<router-link tag="li" :to="{path:'/user/order',query:{uri:'allOrder'}}">全部订单</router-link>
+				<router-link tag="li" :to="{path:'/user/order',query:{uri:'waitPay'}}">待付款</router-link>
+				<router-link tag="li" :to="{path:'/user/order',query:{uri:'waitRec'}}">待收货</router-link>
 				<router-link tag="li" to="/user/addr">地址管理</router-link>
 			</ul>
 		</div>

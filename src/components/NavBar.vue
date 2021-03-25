@@ -10,7 +10,7 @@
 			<router-link tag="li" to="/cart">
 				<img src="../assets/img/icon/icon-cart.png" />
 			</router-link>
-			<router-link tag="li" to="/user/AllOrder">
+			<router-link active-class="active" tag="li" to="/user">
 				<img src="../assets/img/icon/icon-user.png" />
 			</router-link>
 		</ul>

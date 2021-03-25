@@ -5,14 +5,13 @@ import Cat from '../views/Cat.vue'
 import Cart from '../views/Cart.vue'
 import User from '../views/User.vue'
 import Login from '../views/Login.vue'
-import AllOrder from '../components/AllOrder.vue'
-import WaitPay from '../components/WaitPay.vue'
-import WaitRec from '../components/WaitRec.vue'
+import Order from '../components/Order.vue'
 import Addr from '../components/Addr.vue'
 import AddAddr from '../views/AddAddr.vue'
 import GoodsDetail from '../views/GoodsDetail.vue'
 import SubCat from "../components/SubCat.vue"
 import GoodsList from "../views/GoodsList.vue"
+import ToPay from "../views/ToPay.vue"
 Vue.use(VueRouter)
 
 const routes = [
@@ -49,32 +48,21 @@ const routes = [
   {
   	  path:"/user",
   	  component:User,
+	  redirect:{path:'/user/order',query:{uri:'allOrder'}},
 	  meta:{
 	  		  isTab:true
 	  },
 	  //嵌套路由
 	  children:[
 		  {
-			path:"allOrder",
-			component:AllOrder,
+			path:"order",
+			component:Order,
+			
 			meta:{
 					  isTab:true
 			},  
 		  },
-		  {
-		  	path:"waitPay",
-		  	component:WaitPay,
-		  	meta:{
-		  			  isTab:true
-		  	},  
-		  },
-		  {
-		  	path:"waitRec",
-		  	component:WaitRec,
-		  	meta:{
-					  isTab:true
-		  	},  
-		  },
+		  
 		  {
 			path:"addr",
 			component:Addr,
@@ -87,6 +75,11 @@ const routes = [
   {
   	  path:"/login",
   	  component:Login,
+  },
+  {
+  	  path:"/topay",
+  	  component:ToPay,
+  	 
   },
   //商品详情页面
   {
@@ -101,7 +94,8 @@ const routes = [
   {
   	  path:"/goodsList/:id",
   	  component:GoodsList,
-  }
+  },
+  
 ]
 
 const router = new VueRouter({
